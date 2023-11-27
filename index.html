@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Generation</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        section{
+            height: auto;
+            width: 100%;
+            padding: 0% 10%;
+        }
+        #date{
+            font-size: 1rem;
+        }
+        header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2%;
+        }
+        .logo{
+            color: skyblue;
+            font-size: 2rem;
+        }
+        .info{
+            background-color: rgba(148, 142, 142,.3);
+        }
+        .info .heading{
+            display: flex;
+            background-color: rgb(36, 32, 124);
+            justify-content: space-between;
+            padding: 5px 10px;
+            margin-bottom: 2px;
+
+        }
+        .info h2{
+            color: white;
+        }
+        .address{
+            padding: 5px 10px;
+            margin-bottom: 2px;
+            
+        }
+        a{
+            text-decoration: none;
+        }
+        table{
+            margin-top: 30px;
+            width: 100%;
+            border-collapse: collapse;
+            font-family: arial, sans-serif;
+
+        }
+        table{
+            background-color: rgba(148, 142, 142,.3);
+            padding: 5px 10px;
+            color: white;
+        }
+        th{
+            background-color: rgb(36, 32, 124);
+            padding: 5px 10px;
+            color: white;
+        }
+        tr{
+            text-align: center;
+            color: black;
+            background-color: brown;
+        }
+        td{
+            text-align: center;
+            color: black;
+        }
+        form{
+            width: 50%;
+            background-color: rgba(20, 106, 172, 0.3);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 10%;
+            z-index: 2;
+        }
+        input{
+            padding: 5px;
+        }
+        label{
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <header>
+            <div class="logo">
+                Kalaivani Computer
+            </div>
+            <div class="left">
+                <div class="store-id">LK_VKB2222 40</div>
+            <div id="date"></div>
+            </div>
+        </header>
+        <div class="info">
+            <div class="heading">
+                <h2>Our Information</h2>
+                <h2>Customer</h2>
+            </div>
+            <div class="address">
+                <div class="place">Head Office:</div>
+                <p>21/1 NS KALAIVANAR STREET,<br>CHENGALPATTU - 603202</p>
+                <div class="contect">
+                    <label for="contact">CONTACT :</label> <span><a href="contact.com">+91 9629449051</a></span><br>
+                    <label>Mail : </label><span><a href="email.com">ikvabsysteminfo@gmail.com</a></span>
+                </div>
+            </div>
+        </div>
+        <table id="table">
+            <tr>
+                    <th>SNO</th>
+                    <th>DESCRIPTION</th>
+                    <th>QTY</th>
+                    <th>PRICE</th>
+                    <th>TOTAL</th>
+            </tr>
+            <!-- <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr> -->
+        </table>
+        <form id="myForm" action="">
+            <label>Description : </label><input id='dis' type="text" placeholder="description"><br>
+            <label>Quantity : </label><input id='qty' type="text" placeholder="quantity"><br>
+            <label>Price : </label><input id='price' type="text" placeholder="price"><br>
+            <button type="button" onclick="add()">ADD</button>
+        </form>
+    </section>
+
+
+    <script>
+        var date = new Date();
+        var current_date = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear();
+        document.getElementById('date').innerHTML = current_date;
+        // window.addEventListener("DOMContentLoaded",()=>{
+        // })
+        
+        function add(){
+            const table = document.getElementById("table");
+            const form = document.getElementById("myForm");
+            var dis = document.getElementById("dis")
+            var qty = document.getElementById("qty")
+            var price = document.getElementById("price")
+            // var dis = document.getElementById('dis')
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            
+            cell1.innerHTML= dis.value;
+            cell2.innerHTML= qty.value;
+            cell3.innerHTML= price.value;
+            console.log(dis.value())
+            console.log(qty.value())
+            console.log(price.value())
+            // cell4.innerHTML= dis.value();
+// Add more cells as needed
+        }
+        
+    </script>
+</body>
+</html>
