@@ -61,7 +61,9 @@
             background-color: rgba(148, 142, 142,.3);
             padding: 5px 10px;
             color: white;
+
         }
+        
         th{
             background-color: rgb(36, 32, 124);
             padding: 5px 10px;
@@ -70,22 +72,23 @@
         tr{
             text-align: center;
             color: black;
-            background-color: brown;
         }
         td{
             text-align: center;
             color: black;
+            padding: 10px 20px;
+            border: solid black 1px;
         }
-        form{
-            width: 50%;
+        #myForm{
             background-color: rgba(20, 106, 172, 0.3);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            padding: 10%;
-            z-index: 2;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 150px;
+            width: 50%;
         }
+        
         input{
             padding: 5px;
         }
@@ -93,16 +96,84 @@
             text-align: center;
             margin-bottom: 10px;
         }
+        #add1{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            color: white;
+            background-color: black;
+        }
+        .addresses{
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        .thala{
+            display: flex;
+            justify-content: space-between;
+        }
+        .demo{
+            width: 70px;
+            height: 40px;
+            background-color: black;
+            line-height: 40px;
+            color: white;
+            text-align: center;
+        }
+        .customer-address{
+            display: flex;
+            color: aliceblue;
+            position: absolute;
+            z-index: 2;
+        }
+        .form-group{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
+        #customer-form{
+            background-color: rgba(20, 106, 172, 0.3);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 150px;
+            width: 50%;
+            float: right;
+        }
     </style>
 </head>
 <body>
     <section>
+        <div class="thala">
+            <div class="left demo" onclick="left_popup()">></div>
+            <div class="right demo" onclick="right_popup()">></div>
+        </div>
+        <div class="form-group">
+            <form id="myForm" action=""> 
+                <input id='dis' type="text" placeholder="Description"><br>
+                <input id='qty' type="number" placeholder="quantity"><br>
+                <input id='price' type="number" placeholder="price"><br>
+                <button type="button" onclick="add()" id="add1">+</button>
+    
+                
+            </form>
+            <form id="customer-form" action="">
+                   <input type="text" placeholder="name">
+                    <input type="text" placeholder="address">
+                    <input type="number" placeholder="phone number">
+                    <button type="button" id="ad-add">+</button>
+    
+            </form>
+        </div>
         <header>
             <div class="logo">
                 Kalaivani Computer
             </div>
             <div class="left">
-                <div class="store-id">LK_VKB2222 40</div>
+                <div class="store-id">LK_VKB<span id="dat"></span><span id="mon"></span></span> 40</div>
             <div id="date"></div>
             </div>
         </header>
@@ -111,70 +182,151 @@
                 <h2>Our Information</h2>
                 <h2>Customer</h2>
             </div>
-            <div class="address">
-                <div class="place">Head Office:</div>
-                <p>21/1 NS KALAIVANAR STREET,<br>CHENGALPATTU - 603202</p>
-                <div class="contect">
-                    <label for="contact">CONTACT :</label> <span><a href="contact.com">+91 9629449051</a></span><br>
-                    <label>Mail : </label><span><a href="email.com">ikvabsysteminfo@gmail.com</a></span>
+            <div class="addresses">
+                <div class="address">
+                    <div class="place">Head Office:</div>
+                    <p>21/1 NS KALAIVANAR STREET,<br>CHENGALPATTU - 603202</p>
+                    <div class="contect">
+                        <label for="contact">CONTACT :</label> <span><a href="contact.com">+91 9629449051</a></span><br>
+                        <label>Mail : </label><span><a href="email.com">ikvabsysteminfo@gmail.com</a></span>
+                    </div>
+                </div>
+                <div class="cus-address address" style="display: none;">
+                    <div class="place">Head Office:</div>
+                    <p>21/1 NS KALAIVANAR STREET,<br>CHENGALPATTU - 603202</p>
+                    <div class="contect">
+                        <label for="contact">CONTACT :</label> <span><a href="contact.com">+91 9629449051</a></span><br>
+                        <label>Mail : </label><span><a href="email.com">ikvabsysteminfo@gmail.com</a></span>
+                    </div>
                 </div>
             </div>
         </div>
         <table id="table">
             <tr>
-                    <th>SNO</th>
+                    <th>S.NO</th>
                     <th>DESCRIPTION</th>
                     <th>QTY</th>
                     <th>PRICE</th>
                     <th>TOTAL</th>
             </tr>
-            <!-- <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr> -->
         </table>
-        <form id="myForm" action="">
-            <label>Description : </label><input id='dis' type="text" placeholder="description"><br>
-            <label>Quantity : </label><input id='qty' type="text" placeholder="quantity"><br>
-            <label>Price : </label><input id='price' type="text" placeholder="price"><br>
-            <button type="button" onclick="add()">ADD</button>
-        </form>
     </section>
 
 
     <script>
-        var date = new Date();
-        var current_date = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear();
-        document.getElementById('date').innerHTML = current_date;
+        dataShow();
+
+        var form = document.getElementById("myForm");
+        var cus_con = document.getElementsById('customer-form')
+      
+      
         // window.addEventListener("DOMContentLoaded",()=>{
         // })
-        
+        const table = document.getElementById("table");
+        let showTotal = 0;
+        let row;
+        const arr = []
+        const obj = {}
         function add(){
-            const table = document.getElementById("table");
-            const form = document.getElementById("myForm");
             var dis = document.getElementById("dis")
             var qty = document.getElementById("qty")
             var price = document.getElementById("price")
             // var dis = document.getElementById('dis')
-            var row = table.insertRow(-1);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
+            var input = document.getElementsByTagName("input");
+            if(input[0].value != '' && input[1].value != '' && input[2].value != ''){
+            row = table.insertRow(-1);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
+            let cell5 = row.insertCell(4);
+          
+            cell1.innerHTML= table.rows.length-1;
+            cell2.innerHTML= dis.value;
+            cell3.innerHTML= qty.value;
+            cell4.innerHTML= price.value;
+            var total = qty.value*price.value
+            cell5.innerHTML= total;
+            showTotal += total;
+
+            obj.sno = table.rows.length-1;
+            obj.description =  dis.value;
+            obj.quantity = qty.value;
+            obj.price = price.value;
+            obj.total = total;
+
+            arr.push(obj);
+            console.log(obj);
+            console.log(arr);
+
+            //  if(table.rows.length > 0){
+            //     if(table.rows)
+            //     specialRow();
+            //  }
+             
+            }
+            // if(rows.length > 1)
+            // {
+            //     var row2 = table.insertRow(-1)
+            // }
             
-            cell1.innerHTML= dis.value;
-            cell2.innerHTML= qty.value;
-            cell3.innerHTML= price.value;
-            console.log(dis.value())
-            console.log(qty.value())
-            console.log(price.value())
-            // cell4.innerHTML= dis.value();
-// Add more cells as needed
+            form.reset();
+        }    
+        function dataShow(){
+        var date = new Date();
+        var current_date = date.getDate()+"-"+date.getMonth()+"-"+date.getFullYear();
+        document.getElementById('date').innerHTML = current_date;
+        var dat = document.getElementById('dat')
+        var mon = document.getElementById('mon')
+        dat.innerHTML = date.getDate()
+        mon.innerHTML = date.getMonth()
+        }        
+        function specialRow(){
+            let row = table.insertRow(-1);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            let cell3 = row.insertCell(2);
+            let cell4 = row.insertCell(3);
+            let cell5 = row.insertCell(4); 
+            
+            cell1.innerHTML= '';
+            cell2.innerHTML= '';
+            cell3.innerHTML= '';
+            cell4.innerHTML= "Total";
+            cell5.innerHTML= showTotal;
+
         }
-        
+        // row.addEventListener('click',()=>{
+        //         // dis.value = arr[0].description
+        //         // qty.value = arr[0].quantity
+        //         // price.value = arr[0].price
+        //         for (let i = 0;i < row.length;i++){
+        //         const ind = Array.from(row).indexOf(this);
+        //         console.log('index : '+ind)
+        //         }
+        //         console.log("hi")
+        //      })
+        function left_popup(){
+      if(form.style.display === "flex" || form.style.display === "flex"){
+        form.style.display = "none"
+        form.style.transition = "2s"
+      }
+      else{
+        form.style.display = "flex"
+        form.style.transition = "2s"
+      }
+    }
+    function right_popup(){
+        if(cus_con.style.display === "flex"){
+            cus_con.style.display = "none"
+        }
+        else{
+            cus_con.style.display = "flex"
+            form.style.transition = "2s"
+
+
+        }
+    }
     </script>
 </body>
 </html>
