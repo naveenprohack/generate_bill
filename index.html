@@ -133,9 +133,9 @@
             flex-direction: row;
             width: 100%;
         }
-        #customer-form{
+        #customerForm{
             background-color: rgba(20, 106, 172, 0.3);
-            display: none;
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
@@ -160,7 +160,7 @@
     
                 
             </form>
-            <form id="customer-form" action="">
+            <form id="customerForm" action="">
                    <input type="text" placeholder="name">
                     <input type="text" placeholder="address">
                     <input type="number" placeholder="phone number">
@@ -217,7 +217,7 @@
         dataShow();
 
         var form = document.getElementById("myForm");
-        var cus_con = document.getElementsById('customer-form')
+        var cus_form = document.getElementsById('customerForm')
       
       
         // window.addEventListener("DOMContentLoaded",()=>{
@@ -317,14 +317,12 @@
       }
     }
     function right_popup(){
-        if(cus_con.style.display === "flex"){
-            cus_con.style.display = "none"
+        if(cus_form.style.display === "flex"){
+            cus_form.style.display = "none"
         }
         else{
-            cus_con.style.display = "flex"
-            form.style.transition = "2s"
-
-
+            cus_form.style.display = "flex"
+            cus_form.style.transition = "2s"
         }
     }
     </script>
